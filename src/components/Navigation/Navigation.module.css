@@ -1,0 +1,28 @@
+.navigation {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.link {
+    color: var(--black);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--gray);
+}
+
+.logout {
+    border: none;
+    background: none;
+    font-size: 1rem;
+    padding: 0rem;
+    font-family: inherit;
+}
+
+.logout:hover {
+    color: var(--gray);
+}
