@@ -3,6 +3,7 @@ type Todo = {
     id: number
     isCompleted: boolean
     name: string
+    userId: string
 }
 
 export type {Todo}

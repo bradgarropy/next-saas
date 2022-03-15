@@ -7,15 +7,26 @@ import Stripe from "stripe"
 import {Product} from "types/product"
 import {getStripeClient} from "utils/stripeClient"
 import {stripeServer} from "utils/stripeServer"
+import {supabase} from "utils/supabase"
 
 type IndexPageProps = {
     products: Product[]
 }
 
 const IndexPage: FC<IndexPageProps> = ({products}) => {
+    const user = supabase.auth.user()
+
     const handleCheckout = async (product: Product) => {
         const session = await post<Stripe.Checkout.Session>("/api/checkout", {
-            body: {priceId: product.price.id},
+            body: {
+                user: {
+                    id: user.id,
+                    email: user.email,
+                },
+                price: {
+                    id: product.price.id,
+                },
+            },
         })
 
         const stripeClient = await getStripeClient()
