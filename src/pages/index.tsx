@@ -2,6 +2,7 @@ import {post} from "@bradgarropy/http"
 import SEO from "@bradgarropy/next-seo"
 import Layout from "components/Layout"
 import {GetStaticProps} from "next"
+import {useRouter} from "next/router"
 import {FC} from "react"
 import Stripe from "stripe"
 import {Product} from "types/product"
@@ -14,9 +15,15 @@ type IndexPageProps = {
 }
 
 const IndexPage: FC<IndexPageProps> = ({products}) => {
+    const router = useRouter()
     const user = supabase.auth.user()
 
     const handleCheckout = async (product: Product) => {
+        if (!user) {
+            router.push("/login")
+            return
+        }
+
         const session = await post<Stripe.Checkout.Session>("/api/checkout", {
             body: {
                 user: {
