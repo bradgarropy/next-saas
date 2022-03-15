@@ -37,28 +37,34 @@ const stripeHandler: NextApiHandler = async (req, res) => {
 
             const session = event.data.object as Stripe.Checkout.Session
 
+            const subscription = await stripeServer.subscriptions.retrieve(
+                session.subscription as string,
+            )
+
+            const {plan} = subscription.items.data[0]
+
             await createSubscription({
                 userId: session.client_reference_id,
                 customerId: session.customer as string,
                 subscriptionId: session.subscription as string,
+                price: plan.amount,
+                interval: plan.interval,
             })
 
             break
         }
 
-        // TODO: Do I need this?
         case "customer.subscription.created": {
             console.log("customer.subscription.created")
+
             break
         }
 
-        // TODO: Do I need this?
         case "customer.subscription.updated": {
             console.log("customer.subscription.updated")
             break
         }
 
-        // TODO: Do I need this?
         case "customer.subscription.deleted": {
             console.log("customer.subscription.deleted")
             break
