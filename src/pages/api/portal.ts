@@ -13,9 +13,7 @@ const portalHandler: NextApiHandler<Stripe.BillingPortal.Session> = async (
         return_url: "http://localhost:3000/account",
     })
 
-    // res.status(200).json(session)
-    res.redirect(session.url)
-    return
+    res.status(200).json(session)
 }
 
 export default portalHandler

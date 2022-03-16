@@ -23,9 +23,6 @@ const AccountPage: FC = () => {
     }, [user?.id])
 
     const handleClick = async () => {
-        console.log("handleClick")
-        console.log(subscription.customerId)
-
         const session = await post<Stripe.BillingPortal.Session>(
             "/api/portal",
             {
@@ -35,7 +32,6 @@ const AccountPage: FC = () => {
             },
         )
 
-        console.log("redirecting client side")
         router.push(session.url)
     }
 
