@@ -35,7 +35,7 @@ const IndexPage: FC<IndexPageProps> = ({products}) => {
 
     return (
         <Layout>
-            <SEO title="next todo" />
+            <SEO title="pricing" />
 
             <h1>pricing</h1>
 

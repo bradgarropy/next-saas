@@ -1,7 +1,6 @@
 import {post} from "@bradgarropy/http"
 import SEO from "@bradgarropy/next-seo"
 import Layout from "components/Layout"
-import {useRouter} from "next/router"
 import {FC, useEffect, useState} from "react"
 import Stripe from "stripe"
 import {Subscription} from "types/subscription"
@@ -11,7 +10,6 @@ import {supabase} from "utils/supabase"
 const AccountPage: FC = () => {
     const [subscription, setSubscription] = useState<Subscription>()
     const user = supabase.auth.user()
-    const router = useRouter()
 
     useEffect(() => {
         const fetch = async () => {
@@ -32,12 +30,12 @@ const AccountPage: FC = () => {
             },
         )
 
-        router.push(session.url)
+        window.location.href = session.url
     }
 
     return (
         <Layout>
-            <SEO title="next todo" />
+            <SEO title="account" />
 
             <h1>account</h1>
 
