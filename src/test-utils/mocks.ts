@@ -7,12 +7,14 @@ const mockTodos: Todo[] = [
         id: 1,
         isCompleted: true,
         name: "complete todo",
+        userId: "abc123",
     },
     {
         createdAt: "2022-01-02T00:00:00.000Z",
         id: 2,
         isCompleted: false,
         name: "incomplete todo",
+        userId: "abc123",
     },
 ]
 
