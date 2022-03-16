@@ -27,6 +27,10 @@ const Navigation: FC = () => {
                         todos
                     </Link>
 
+                    <Link to="/account" className={NavigationStyles.link}>
+                        account
+                    </Link>
+
                     <button
                         className={classNames(
                             NavigationStyles.logout,

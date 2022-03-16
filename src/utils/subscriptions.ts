@@ -10,6 +10,16 @@ const createSubscription = async (subscription: Partial<Subscription>) => {
     return newSubscription
 }
 
+const readSubscriptionByUser = async (userId: Subscription["userId"]) => {
+    const {data: subscription} = await supabase
+        .from<Subscription>("subscriptions")
+        .select("*")
+        .eq("userId", userId)
+        .single()
+
+    return subscription
+}
+
 const updateSubscription = async (
     userId: Subscription["userId"],
     updates: Partial<Subscription>,
@@ -33,4 +43,9 @@ const deleteSubscription = async (userId: Subscription["userId"]) => {
     return deletedSubscription
 }
 
-export {createSubscription, deleteSubscription, updateSubscription}
+export {
+    createSubscription,
+    deleteSubscription,
+    readSubscriptionByUser,
+    updateSubscription,
+}

@@ -49,7 +49,7 @@ const TodosPage: FC<TodosPageProps> = () => {
 
     return (
         <Layout>
-            <SEO title="next todo" />
+            <SEO title="todos" />
 
             <h1>todos</h1>
 
