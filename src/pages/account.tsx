@@ -41,6 +41,8 @@ const AccountPage: FC = () => {
 
             {subscription ? (
                 <>
+                    <p>{subscription.name}</p>
+
                     <p>{`$${subscription.price / 100} / ${
                         subscription.interval
                     }`}</p>

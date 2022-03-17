@@ -21,23 +21,23 @@ const readSubscriptionByUser = async (userId: Subscription["userId"]) => {
 }
 
 const updateSubscription = async (
-    userId: Subscription["userId"],
+    id: Subscription["id"],
     updates: Partial<Subscription>,
 ) => {
     const {data: updatedSubscription} = await supabase
         .from("subscriptions")
         .update(updates)
-        .eq("userId", userId)
+        .eq("id", id)
         .single()
 
     return updatedSubscription
 }
 
-const deleteSubscription = async (userId: Subscription["userId"]) => {
+const deleteSubscription = async (id: Subscription["id"]) => {
     const {data: deletedSubscription} = await supabase
         .from<Subscription>("subscriptions")
         .delete()
-        .eq("userId", userId)
+        .eq("id", id)
         .single()
 
     return deletedSubscription

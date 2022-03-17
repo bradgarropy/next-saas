@@ -16,28 +16,30 @@ type IndexPageProps = {
 
 const IndexPage: FC<IndexPageProps> = ({products}) => {
     const router = useRouter()
-    const user = supabase.auth.user()
 
     const handleCheckout = async (product: Product) => {
+        const user = supabase.auth.user()
+
         if (!user) {
             router.push("/login")
             return
         }
 
-        const session = await post<Stripe.Checkout.Session>("/api/checkout", {
+        const session = supabase.auth.session()
+
+        const checkout = await post<Stripe.Checkout.Session>("/api/checkout", {
             body: {
-                user: {
-                    id: user.id,
-                    email: user.email,
-                },
                 price: {
                     id: product.price.id,
                 },
             },
+            headers: {
+                Authorization: `Bearer ${session.access_token}`,
+            },
         })
 
         const stripeClient = await getStripeClient()
-        stripeClient.redirectToCheckout({sessionId: session.id})
+        stripeClient.redirectToCheckout({sessionId: checkout.id})
     }
 
     return (

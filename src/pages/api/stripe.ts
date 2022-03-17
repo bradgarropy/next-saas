@@ -1,7 +1,11 @@
 import type {NextApiHandler} from "next"
 import Stripe from "stripe"
 import {stripeServer} from "utils/stripeServer"
-import {createSubscription} from "utils/subscriptions"
+import {
+    createSubscription,
+    deleteSubscription,
+    updateSubscription,
+} from "utils/subscriptions"
 
 const config = {
     api: {
@@ -19,6 +23,46 @@ const buffer = async readable => {
     return Buffer.concat(chunks)
 }
 
+const handleSubscriptionCreate = async (subscription: Stripe.Subscription) => {
+    const {price} = subscription.items.data[0]
+
+    const product = await stripeServer.products.retrieve(
+        price.product as string,
+    )
+
+    return createSubscription({
+        id: subscription.id,
+        name: product.name,
+        price: price.unit_amount,
+        interval: price.recurring.interval,
+        status: subscription.status,
+        userId: subscription.metadata.userId,
+        customerId: subscription.customer as string,
+    })
+}
+
+const handleSubscriptionUpdate = async (subscription: Stripe.Subscription) => {
+    const {price} = subscription.items.data[0]
+
+    const product = await stripeServer.products.retrieve(
+        price.product as string,
+    )
+
+    return updateSubscription(subscription.id, {
+        id: subscription.id,
+        name: product.name,
+        price: price.unit_amount,
+        interval: price.recurring.interval,
+        status: subscription.status,
+        userId: subscription.metadata.userId,
+        customerId: subscription.customer as string,
+    })
+}
+
+const handleSubscriptionDelete = async (subscription: Stripe.Subscription) => {
+    return deleteSubscription(subscription.id)
+}
+
 const stripeHandler: NextApiHandler = async (req, res) => {
     const body = await buffer(req)
     const stripeSignature = req.headers["stripe-signature"]
@@ -29,44 +73,31 @@ const stripeHandler: NextApiHandler = async (req, res) => {
         process.env.STRIPE_WEBHOOK_SECRET_KEY,
     )
 
-    console.log(`EVENT: ${event.type}`)
-
     switch (event.type) {
-        case "checkout.session.completed": {
-            console.log("checkout.session.completed")
-
-            const session = event.data.object as Stripe.Checkout.Session
-
-            const subscription = await stripeServer.subscriptions.retrieve(
-                session.subscription as string,
-            )
-
-            const {plan} = subscription.items.data[0]
-
-            await createSubscription({
-                userId: session.client_reference_id,
-                customerId: session.customer as string,
-                subscriptionId: session.subscription as string,
-                price: plan.amount,
-                interval: plan.interval,
-            })
-
-            break
-        }
-
         case "customer.subscription.created": {
             console.log("customer.subscription.created")
+
+            const subscription = event.data.object as Stripe.Subscription
+            await handleSubscriptionCreate(subscription)
 
             break
         }
 
         case "customer.subscription.updated": {
             console.log("customer.subscription.updated")
+
+            const subscription = event.data.object as Stripe.Subscription
+            await handleSubscriptionUpdate(subscription)
+
             break
         }
 
         case "customer.subscription.deleted": {
             console.log("customer.subscription.deleted")
+
+            const subscription = event.data.object as Stripe.Subscription
+            await handleSubscriptionDelete(subscription)
+
             break
         }
     }
