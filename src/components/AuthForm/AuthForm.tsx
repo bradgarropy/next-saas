@@ -3,7 +3,7 @@ import {FC, FormEventHandler, useState} from "react"
 import AuthFormStyles from "./AuthForm.module.css"
 
 type AuthFormProps = {
-    type: "login" | "signup"
+    type: "signin" | "signup"
     onSubmit: (email: string, password: string) => Promise<void>
 }
 
@@ -40,7 +40,7 @@ const AuthForm: FC<AuthFormProps> = ({type, onSubmit}) => {
                 type="password"
                 value={password}
                 autoComplete={
-                    type === "login" ? "current-password" : "new-password"
+                    type === "signin" ? "current-password" : "new-password"
                 }
                 className={AuthFormStyles.input}
                 onChange={event => setPassword(event.target.value)}

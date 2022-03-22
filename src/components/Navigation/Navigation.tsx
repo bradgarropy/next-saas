@@ -47,8 +47,8 @@ const Navigation: FC = () => {
                         signup
                     </Link>
 
-                    <Link to="/login" className={NavigationStyles.link}>
-                        login
+                    <Link to="/signin" className={NavigationStyles.link}>
+                        signin
                     </Link>
                 </>
             )}

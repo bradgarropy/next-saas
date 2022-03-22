@@ -5,12 +5,10 @@ import {useRouter} from "next/router"
 import {FC} from "react"
 import {supabase} from "utils/supabase"
 
-type LoginPageProps = unknown
-
-const LoginPage: FC<LoginPageProps> = () => {
+const SigninPage: FC = () => {
     const router = useRouter()
 
-    const handleLogin = async (email: string, password: string) => {
+    const handleSignin = async (email: string, password: string) => {
         await supabase.auth.signIn({
             email,
             password,
@@ -21,12 +19,12 @@ const LoginPage: FC<LoginPageProps> = () => {
 
     return (
         <Layout>
-            <SEO title="login" />
+            <SEO title="signin" />
 
-            <h1>login</h1>
-            <AuthForm type="login" onSubmit={handleLogin} />
+            <h1>signin</h1>
+            <AuthForm type="signin" onSubmit={handleSignin} />
         </Layout>
     )
 }
 
-export default LoginPage
+export default SigninPage

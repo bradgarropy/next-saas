@@ -21,7 +21,7 @@ const IndexPage: FC<IndexPageProps> = ({products}) => {
         const user = supabase.auth.user()
 
         if (!user) {
-            router.push("/login")
+            router.push("/signin")
             return
         }
 

@@ -25,6 +25,6 @@ test("shows layout", () => {
 
     expect(screen.getByText("home"))
     expect(screen.getByText("signup"))
-    expect(screen.getByText("login"))
+    expect(screen.getByText("signin"))
     expect(screen.getByText("testing"))
 })

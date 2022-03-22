@@ -22,7 +22,7 @@ test("shows unauthenticated header", () => {
 
     expect(screen.getByText("home"))
     expect(screen.getByText("signup"))
-    expect(screen.getByText("login"))
+    expect(screen.getByText("signin"))
 })
 
 test("shows authenticated header", () => {
