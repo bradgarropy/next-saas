@@ -1,4 +1,6 @@
 import {User} from "@supabase/supabase-js"
+import {UserContextType} from "context"
+import {Subscription} from "types/subscription"
 import {Todo} from "types/todo"
 
 const mockTodos: Todo[] = [
@@ -32,4 +34,28 @@ const mockUser: User = {
     user_metadata: {},
 }
 
-export {mockCompleteTodo, mockIncompleteTodo, mockTodo, mockTodos, mockUser}
+const mockSubscription: Subscription = {
+    id: "abc123",
+    name: "Basic",
+    price: 299,
+    interval: "month",
+    status: "active",
+    customerId: "cus_abc123",
+    userId: mockUser.id,
+    createdAt: "00:00:00",
+}
+
+const mockUserCtx: UserContextType = {
+    user: mockUser,
+    token: "abc123",
+    subscription: mockSubscription,
+}
+
+export {
+    mockCompleteTodo,
+    mockIncompleteTodo,
+    mockTodo,
+    mockTodos,
+    mockUser,
+    mockUserCtx,
+}

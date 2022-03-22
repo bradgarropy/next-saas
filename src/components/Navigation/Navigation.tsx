@@ -11,7 +11,7 @@ const Navigation: FC = () => {
     const {user} = useUser()
     const router = useRouter()
 
-    const handleLogout = async () => {
+    const handleSignout = async () => {
         await supabase.auth.signOut()
         router.push("/")
     }
@@ -34,12 +34,12 @@ const Navigation: FC = () => {
 
                     <button
                         className={classNames(
-                            NavigationStyles.logout,
+                            NavigationStyles.signout,
                             NavigationStyles.link,
                         )}
-                        onClick={handleLogout}
+                        onClick={handleSignout}
                     >
-                        logout
+                        signout
                     </button>
                 </>
             ) : (

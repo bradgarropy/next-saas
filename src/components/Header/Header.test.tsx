@@ -1,22 +1,23 @@
 import {render, screen} from "@testing-library/react"
 import Header from "components/Header"
-import {mockUser} from "test-utils/mocks"
-import {supabase} from "utils/supabase"
+import {useUser} from "hooks"
+import {mockUserCtx} from "test-utils/mocks"
 
 jest.mock("utils/supabase", () => {
     return {
         supabase: {
             auth: {
-                user: jest.fn(),
+                signout: jest.fn(),
             },
         },
     }
 })
 
-const mockAuthUser = jest.mocked(supabase.auth.user)
+jest.mock("hooks")
+const mockUseUser = jest.mocked(useUser)
 
 test("shows unauthenticated header", () => {
-    mockAuthUser.mockReturnValue(null)
+    mockUseUser.mockReturnValue({...mockUserCtx, user: null})
 
     render(<Header />)
 
@@ -26,11 +27,11 @@ test("shows unauthenticated header", () => {
 })
 
 test("shows authenticated header", () => {
-    mockAuthUser.mockReturnValue(mockUser)
+    mockUseUser.mockReturnValue(mockUserCtx)
 
     render(<Header />)
 
     expect(screen.getByText("home"))
     expect(screen.getByText("todos"))
-    expect(screen.getByText("logout"))
+    expect(screen.getByText("signout"))
 })

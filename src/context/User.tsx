@@ -39,8 +39,6 @@ const UserProvider: FC = ({children}) => {
         subscription,
     }
 
-    console.log(context)
-
     return (
         <UserContext.Provider value={context}>{children}</UserContext.Provider>
     )
