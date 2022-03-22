@@ -1,6 +1,7 @@
 import "../styles/styles.css"
 
 import SEO from "@bradgarropy/next-seo"
+import {UserProvider} from "context"
 import type {AppProps} from "next/app"
 import Head from "next/head"
 import {ReactElement, useEffect} from "react"
@@ -38,7 +39,10 @@ const App = ({Component, pageProps}: AppProps): ReactElement => {
                     card: "summary",
                 }}
             />
-            <Component {...pageProps} />
+
+            <UserProvider>
+                <Component {...pageProps} />
+            </UserProvider>
         </>
     )
 }

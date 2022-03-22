@@ -1,6 +1,7 @@
 import {post} from "@bradgarropy/http"
 import SEO from "@bradgarropy/next-seo"
 import Layout from "components/Layout"
+import {useUser} from "hooks"
 import {GetStaticProps} from "next"
 import {useRouter} from "next/router"
 import {FC} from "react"
@@ -8,24 +9,20 @@ import Stripe from "stripe"
 import {Product} from "types/product"
 import {getStripeClient} from "utils/stripeClient"
 import {stripeServer} from "utils/stripeServer"
-import {supabase} from "utils/supabase"
 
 type IndexPageProps = {
     products: Product[]
 }
 
 const IndexPage: FC<IndexPageProps> = ({products}) => {
+    const {user, token} = useUser()
     const router = useRouter()
 
     const handleCheckout = async (product: Product) => {
-        const user = supabase.auth.user()
-
         if (!user) {
             router.push("/signin")
             return
         }
-
-        const session = supabase.auth.session()
 
         const checkout = await post<Stripe.Checkout.Session>("/api/checkout", {
             body: {
@@ -34,7 +31,7 @@ const IndexPage: FC<IndexPageProps> = ({products}) => {
                 },
             },
             headers: {
-                Authorization: `Bearer ${session.access_token}`,
+                Authorization: `Bearer ${token}`,
             },
         })
 

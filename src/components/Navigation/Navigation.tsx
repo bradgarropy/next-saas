@@ -1,5 +1,6 @@
 import Link from "@bradgarropy/next-link"
 import classNames from "classnames"
+import {useUser} from "hooks"
 import {useRouter} from "next/router"
 import {FC} from "react"
 import {supabase} from "utils/supabase"
@@ -7,7 +8,7 @@ import {supabase} from "utils/supabase"
 import NavigationStyles from "./Navigation.module.css"
 
 const Navigation: FC = () => {
-    const user = supabase.auth.user()
+    const {user} = useUser()
     const router = useRouter()
 
     const handleLogout = async () => {
