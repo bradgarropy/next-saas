@@ -37,6 +37,8 @@ const AccountPage: FC = () => {
 
             <h1>account</h1>
 
+            <p>{user.email}</p>
+
             {subscription ? (
                 <>
                     <p>{subscription.name}</p>

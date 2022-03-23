@@ -67,16 +67,21 @@ const stripeHandler: NextApiHandler = async (req, res) => {
     const body = await buffer(req)
     const stripeSignature = req.headers["stripe-signature"]
 
-    const event = stripeServer.webhooks.constructEvent(
-        body,
-        stripeSignature,
-        process.env.STRIPE_WEBHOOK_SECRET_KEY,
-    )
+    let event: Stripe.Event
+
+    try {
+        event = stripeServer.webhooks.constructEvent(
+            body,
+            stripeSignature,
+            process.env.STRIPE_WEBHOOK_SECRET_KEY,
+        )
+    } catch (error) {
+        res.status(400).json({error: `Webhook Error: ${error.message}`})
+        return
+    }
 
     switch (event.type) {
         case "customer.subscription.created": {
-            console.log("customer.subscription.created")
-
             const subscription = event.data.object as Stripe.Subscription
             await handleSubscriptionCreate(subscription)
 
@@ -84,8 +89,6 @@ const stripeHandler: NextApiHandler = async (req, res) => {
         }
 
         case "customer.subscription.updated": {
-            console.log("customer.subscription.updated")
-
             const subscription = event.data.object as Stripe.Subscription
             await handleSubscriptionUpdate(subscription)
 
@@ -93,8 +96,6 @@ const stripeHandler: NextApiHandler = async (req, res) => {
         }
 
         case "customer.subscription.deleted": {
-            console.log("customer.subscription.deleted")
-
             const subscription = event.data.object as Stripe.Subscription
             await handleSubscriptionDelete(subscription)
 
