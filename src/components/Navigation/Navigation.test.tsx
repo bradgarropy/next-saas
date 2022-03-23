@@ -46,6 +46,7 @@ test("shows authenticated navigation", () => {
 
     expect(screen.getByText("home"))
     expect(screen.getByText("todos"))
+    expect(screen.getByText("account"))
     expect(screen.getByText("signout"))
 })
 

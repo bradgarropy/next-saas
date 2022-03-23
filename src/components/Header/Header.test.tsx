@@ -33,5 +33,6 @@ test("shows authenticated header", () => {
 
     expect(screen.getByText("home"))
     expect(screen.getByText("todos"))
+    expect(screen.getByText("account"))
     expect(screen.getByText("signout"))
 })
