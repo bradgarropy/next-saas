@@ -1,15 +1,25 @@
+import Link from "@bradgarropy/next-link"
 import SEO from "@bradgarropy/next-seo"
 import Layout from "components/Layout"
 import Todo from "components/Todo"
 import TodoForm from "components/TodoForm"
+import {useUser} from "hooks"
+import {useRouter} from "next/router"
 import {FC, useEffect, useState} from "react"
 import {Todo as TodoType} from "types/todo"
 import {createTodo, deleteTodo, readAllTodos, updateTodo} from "utils/todos"
 
-type TodosPageProps = null
-
-const TodosPage: FC<TodosPageProps> = () => {
+const TodosPage: FC = () => {
+    const router = useRouter()
+    const {user, subscription} = useUser()
     const [todos, setTodos] = useState([])
+
+    useEffect(() => {
+        if (!user) {
+            router.push("/signin")
+            return
+        }
+    }, [user, router])
 
     useEffect(() => {
         const fetchTodos = async () => {
@@ -53,18 +63,27 @@ const TodosPage: FC<TodosPageProps> = () => {
 
             <h1>todos</h1>
 
-            <TodoForm onSubmit={handleAdd} />
+            {subscription ? (
+                <>
+                    <TodoForm onSubmit={handleAdd} />
 
-            {todos.map(todo => {
-                return (
-                    <Todo
-                        key={todo.id}
-                        todo={todo}
-                        onCompleted={handleCompleted}
-                        onDelete={handleDelete}
-                    />
-                )
-            })}
+                    {todos.map(todo => {
+                        return (
+                            <Todo
+                                key={todo.id}
+                                todo={todo}
+                                onCompleted={handleCompleted}
+                                onDelete={handleDelete}
+                            />
+                        )
+                    })}
+                </>
+            ) : (
+                <p>
+                    You need a <Link to="/">subscription</Link> to track your
+                    todos.
+                </p>
+            )}
         </Layout>
     )
 }

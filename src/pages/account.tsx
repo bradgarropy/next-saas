@@ -1,12 +1,22 @@
 import {post} from "@bradgarropy/http"
+import Link from "@bradgarropy/next-link"
 import SEO from "@bradgarropy/next-seo"
 import Layout from "components/Layout"
 import {useUser} from "hooks"
-import {FC} from "react"
+import {useRouter} from "next/router"
+import {FC, useEffect} from "react"
 import Stripe from "stripe"
 
 const AccountPage: FC = () => {
-    const {subscription} = useUser()
+    const router = useRouter()
+    const {user, subscription} = useUser()
+
+    useEffect(() => {
+        if (!user) {
+            router.push("/signin")
+            return
+        }
+    }, [user, router])
 
     const handleClick = async () => {
         const session = await post<Stripe.BillingPortal.Session>(
@@ -39,7 +49,11 @@ const AccountPage: FC = () => {
                         change plan
                     </button>
                 </>
-            ) : null}
+            ) : (
+                <p>
+                    No active <Link to="/">subscription</Link>.
+                </p>
+            )}
         </Layout>
     )
 }
