@@ -37,7 +37,7 @@ const AccountPage: FC = () => {
 
             <h1>account</h1>
 
-            <p>{user.email}</p>
+            {user ? <p>{user?.email}</p> : null}
 
             {subscription ? (
                 <>
