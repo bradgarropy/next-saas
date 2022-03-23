@@ -1,7 +1,28 @@
 import {User} from "@supabase/supabase-js"
 import {UserContextType} from "context"
+import {Product} from "types/product"
 import {Subscription} from "types/subscription"
 import {Todo} from "types/todo"
+
+const mockBasicProduct = {
+    id: "prod_abc123",
+    name: "Basic",
+    price: {
+        id: "price_abc123",
+        amount: 2.99,
+    },
+}
+
+const mockPremiumProduct = {
+    id: "prod_def456",
+    name: "Premium",
+    price: {
+        id: "price_def456",
+        amount: 6.99,
+    },
+}
+
+const mockProducts: Product[] = [mockBasicProduct, mockPremiumProduct]
 
 const mockTodos: Todo[] = [
     {
@@ -64,10 +85,13 @@ const mockUserCtx: UserContextType = {
 }
 
 export {
+    mockBasicProduct,
     mockBasicSubscription,
     mockCompleteTodo,
     mockIncompleteTodo,
+    mockPremiumProduct,
     mockPremiumSubscription,
+    mockProducts,
     mockTodo,
     mockTodos,
     mockUser,
