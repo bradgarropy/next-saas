@@ -21,17 +21,23 @@ Object.defineProperty(window, "location", {
 
 test("shows no user information", () => {
     render(<Account user={null} subscription={null} />)
-    expect(screen.queryByText(mockUser.email)).not.toBeInTheDocument()
+
+    expect(screen.getByText("Email"))
+    expect(screen.getByText("Please", {exact: false}))
+    expect(screen.getByText("sign in")).toHaveAttribute("href", "/signin")
 })
 
 test("shows user information", () => {
     render(<Account user={mockUser} subscription={null} />)
+
+    expect(screen.getByText("Email"))
     expect(screen.getByText(mockUser.email))
 })
 
 test("shows no subscription", () => {
     render(<Account user={mockUser} subscription={null} />)
 
+    expect(screen.getByText("Subscription"))
     expect(screen.getByText("No active", {exact: false}))
     expect(screen.getByText("subscription")).toHaveAttribute("href", "/")
 })
@@ -39,6 +45,7 @@ test("shows no subscription", () => {
 test("shows basic subscription", () => {
     render(<Account user={mockUser} subscription={mockBasicSubscription} />)
 
+    expect(screen.getByText("Subscription"))
     expect(screen.getByText(mockBasicSubscription.name))
     expect(screen.getByText("$2.99 / month"))
 })
@@ -46,6 +53,7 @@ test("shows basic subscription", () => {
 test("shows premium subscription", () => {
     render(<Account user={mockUser} subscription={mockPremiumSubscription} />)
 
+    expect(screen.getByText("Subscription"))
     expect(screen.getByText(mockPremiumSubscription.name))
     expect(screen.getByText("$6.99 / month"))
 })

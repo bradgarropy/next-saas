@@ -5,7 +5,7 @@ import {FC} from "react"
 import Stripe from "stripe"
 import {Subscription} from "types/subscription"
 
-import styles from "./Account.module.css"
+import AccountStyles from "./Account.module.css"
 
 type AccountProps = {
     user: User
@@ -27,26 +27,42 @@ const Account: FC<AccountProps> = ({user, subscription}) => {
     }
 
     return (
-        <div className={styles.account}>
-            {user ? <p>{user?.email}</p> : null}
+        <div className={AccountStyles.account}>
+            <div className={AccountStyles.email}>
+                <p className={AccountStyles.title}>Email</p>
+                {user ? (
+                    <p>{user?.email}</p>
+                ) : (
+                    <p>
+                        Please <Link to="/signin">sign in</Link>.
+                    </p>
+                )}
+            </div>
 
-            {subscription ? (
-                <>
-                    <p>{subscription.name}</p>
+            <div className={AccountStyles.subscription}>
+                <p className={AccountStyles.title}>Subscription</p>
+                {subscription ? (
+                    <>
+                        <p>{subscription.name}</p>
 
-                    <p>{`$${subscription.price / 100} / ${
-                        subscription.interval
-                    }`}</p>
+                        <p>{`$${subscription.price / 100} / ${
+                            subscription.interval
+                        }`}</p>
 
-                    <button type="button" onClick={handleClick}>
-                        change plan
-                    </button>
-                </>
-            ) : (
-                <p>
-                    No active <Link to="/">subscription</Link>.
-                </p>
-            )}
+                        <button
+                            className={AccountStyles.change}
+                            type="button"
+                            onClick={handleClick}
+                        >
+                            change plan
+                        </button>
+                    </>
+                ) : (
+                    <p>
+                        No active <Link to="/">subscription</Link>.
+                    </p>
+                )}
+            </div>
         </div>
     )
 }

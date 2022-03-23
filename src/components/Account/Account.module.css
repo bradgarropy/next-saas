@@ -1,2 +1,27 @@
 .account {
+    display: grid;
+    row-gap: 1rem;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.change {
+    grid-column-start: 2;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--black);
+    font-size: 1rem;
+    cursor: pointer;
+    background: var(--white);
+    color: var(--black);
+    transition-property: transform;
+    transition-duration: 300ms;
+    font-weight: 300;
+}
+
+.change:hover {
+    transform: scale(1.05);
 }
