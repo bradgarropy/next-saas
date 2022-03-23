@@ -1,2 +1,35 @@
 .pricing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+}
+
+.card {
+    padding: 2rem;
+    border: 3px solid var(--gray);
+    border-radius: 1rem;
+}
+
+.title {
+    margin-top: 0rem;
+}
+
+.buy {
+    grid-column-start: 2;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--offBlack);
+    font-size: 1.25rem;
+    cursor: pointer;
+    background: var(--black);
+    color: var(--white);
+    transition-property: transform;
+    transition-duration: 300ms;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.buy:hover {
+    transform: scale(1.05);
 }

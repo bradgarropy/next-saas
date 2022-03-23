@@ -4,21 +4,23 @@ import {Product} from "types/product"
 import {Subscription} from "types/subscription"
 import {Todo} from "types/todo"
 
-const mockBasicProduct = {
+const mockBasicProduct: Product = {
     id: "prod_abc123",
     name: "Basic",
     price: {
         id: "price_abc123",
         amount: 2.99,
+        interval: "month",
     },
 }
 
-const mockPremiumProduct = {
+const mockPremiumProduct: Product = {
     id: "prod_def456",
     name: "Premium",
     price: {
         id: "price_def456",
         amount: 6.99,
+        interval: "month",
     },
 }
 

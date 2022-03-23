@@ -9,22 +9,21 @@ test("shows products", () => {
     render(<Pricing products={mockProducts} onCheckout={mockCheckout} />)
 
     mockProducts.forEach(mockProduct => {
+        expect(screen.getByText(mockProduct.name))
+
         expect(
             screen.getByText(
-                `${mockProduct.name} $${mockProduct.price.amount}`,
+                `$${mockProduct.price.amount} / ${mockProduct.price.interval}`,
             ),
         )
+
+        expect(screen.getByText(`Buy ${mockProduct.name}`))
     })
 })
 
 test("redirects to checkout", () => {
     render(<Pricing products={mockProducts} onCheckout={mockCheckout} />)
-
-    userEvent.click(
-        screen.getByText(
-            `${mockBasicProduct.name} $${mockBasicProduct.price.amount}`,
-        ),
-    )
+    userEvent.click(screen.getByText(`Buy ${mockBasicProduct.name}`))
 
     expect(mockCheckout).toHaveBeenCalledTimes(1)
     expect(mockCheckout).toHaveBeenCalledWith(mockBasicProduct)

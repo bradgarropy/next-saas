@@ -9,6 +9,7 @@ type Product = {
 type Price = {
     id: Stripe.Price["id"]
     amount: Stripe.Price["unit_amount"]
+    interval: Stripe.Price.Recurring.Interval
 }
 
 export type {Price, Product}
