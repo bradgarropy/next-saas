@@ -18,16 +18,20 @@ const Navigation: FC = () => {
 
     return (
         <nav className={NavigationStyles.navigation}>
-            <Link to="/" className={NavigationStyles.link}>
-                home
-            </Link>
+            <div className={NavigationStyles.navSection}>
+                <Link to="/" className={NavigationStyles.link}>
+                    home
+                </Link>
 
-            {user ? (
-                <>
+                {user ? (
                     <Link to="/todos" className={NavigationStyles.link}>
                         todos
                     </Link>
+                ) : null}
+            </div>
 
+            {user ? (
+                <div className={NavigationStyles.navSection}>
                     <Link to="/account" className={NavigationStyles.link}>
                         account
                     </Link>
@@ -41,9 +45,9 @@ const Navigation: FC = () => {
                     >
                         signout
                     </button>
-                </>
+                </div>
             ) : (
-                <>
+                <div className={NavigationStyles.navSection}>
                     <Link to="/signup" className={NavigationStyles.link}>
                         signup
                     </Link>
@@ -51,7 +55,7 @@ const Navigation: FC = () => {
                     <Link to="/signin" className={NavigationStyles.link}>
                         signin
                     </Link>
-                </>
+                </div>
             )}
         </nav>
     )

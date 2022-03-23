@@ -1,11 +1,7 @@
 import {render, screen} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import Pricing from "components/Pricing"
-import {
-    mockBasicProduct,
-    mockPremiumProduct,
-    mockProducts,
-} from "test-utils/mocks"
+import {mockBasicProduct, mockProducts} from "test-utils/mocks"
 
 const mockCheckout = jest.fn()
 

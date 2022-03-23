@@ -11,6 +11,14 @@ import {
 jest.mock("@bradgarropy/http")
 const mockPost = jest.mocked(post)
 
+global.window = Object.create(window)
+
+Object.defineProperty(window, "location", {
+    value: {
+        href: "",
+    },
+})
+
 test("shows no user information", () => {
     render(<Account user={null} subscription={null} />)
     expect(screen.queryByText(mockUser.email)).not.toBeInTheDocument()
