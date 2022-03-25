@@ -12,7 +12,14 @@ const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
     const token = req.headers.authorization.split(" ")[1]
     const {user} = await supabase.auth.api.getUser(token)
 
-    const session = await stripeServer.checkout.sessions.create({
+    const {data: customers} = await stripeServer.customers.list({
+        email: user.email,
+        limit: 1,
+    })
+
+    const customer = customers[0]
+
+    const sessionCreateParams: Stripe.Checkout.SessionCreateParams = {
         success_url: "http://localhost:3000/todos",
         cancel_url: "http://localhost:3000",
         line_items: [
@@ -22,17 +29,22 @@ const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
             },
         ],
         mode: "subscription",
-        client_reference_id: user.id,
-        customer_email: user.email,
-        metadata: {
-            userId: user.id,
-        },
         subscription_data: {
             metadata: {
                 userId: user.id,
             },
         },
-    })
+    }
+
+    if (customer) {
+        sessionCreateParams.customer = customer.id
+    } else {
+        sessionCreateParams.customer_email = user?.email
+    }
+
+    const session = await stripeServer.checkout.sessions.create(
+        sessionCreateParams,
+    )
 
     res.status(200).json(session)
 }
