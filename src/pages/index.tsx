@@ -33,6 +33,7 @@ const IndexPage: FC<IndexPageProps> = ({products}) => {
             },
         })
 
+        // TODO: redirect on the server
         const stripeClient = await getStripeClient()
         stripeClient.redirectToCheckout({sessionId: checkout.id})
     }

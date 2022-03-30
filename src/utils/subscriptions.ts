@@ -1,4 +1,8 @@
-import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs"
+import {
+    supabaseClient,
+    supabaseServerClient,
+} from "@supabase/supabase-auth-helpers/nextjs"
+import {GetServerSidePropsContext} from "next"
 import {Subscription} from "types/subscription"
 
 const createSubscription = async (subscription: Partial<Subscription>) => {
@@ -10,8 +14,11 @@ const createSubscription = async (subscription: Partial<Subscription>) => {
     return newSubscription
 }
 
-const readSubscriptionByUser = async (userId: Subscription["userId"]) => {
-    const {data: subscription} = await supabaseClient
+const readSubscriptionByUser = async (
+    context: GetServerSidePropsContext,
+    userId: Subscription["userId"],
+) => {
+    const {data: subscription} = await supabaseServerClient(context)
         .from<Subscription>("subscriptions")
         .select("*")
         .eq("userId", userId)

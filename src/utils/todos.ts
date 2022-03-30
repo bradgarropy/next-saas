@@ -1,4 +1,8 @@
-import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs"
+import {
+    supabaseClient,
+    supabaseServerClient,
+} from "@supabase/supabase-auth-helpers/nextjs"
+import {GetServerSidePropsContext} from "next"
 import {Todo} from "types/todo"
 
 const createTodo = async (todo: Partial<Todo>) => {
@@ -10,8 +14,8 @@ const createTodo = async (todo: Partial<Todo>) => {
     return newTodo
 }
 
-const readAllTodos = async () => {
-    const {data: todos} = await supabaseClient
+const readAllTodos = async (context: GetServerSidePropsContext) => {
+    const {data: todos} = await supabaseServerClient(context)
         .from<Todo>("todos")
         .select("*")
         .order("createdAt", {ascending: false})

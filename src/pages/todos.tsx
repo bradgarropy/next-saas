@@ -1,25 +1,22 @@
 import Link from "@bradgarropy/next-link"
 import SEO from "@bradgarropy/next-seo"
-import {withAuthRequired} from "@supabase/supabase-auth-helpers/nextjs"
+import {getUser, withAuthRequired} from "@supabase/supabase-auth-helpers/nextjs"
 import Layout from "components/Layout"
 import Todo from "components/Todo"
 import TodoForm from "components/TodoForm"
-import {FC, useEffect, useState} from "react"
+import {GetServerSideProps} from "next"
+import {FC, useState} from "react"
 import {Todo as TodoType} from "types/todo"
+import {readSubscriptionByUser} from "utils/subscriptions"
 import {createTodo, deleteTodo, readAllTodos, updateTodo} from "utils/todos"
 
-const TodosPage: FC = () => {
-    const [todos, setTodos] = useState([])
-    const subscription = null
+type TodosPageProps = {
+    isSubscribed: boolean
+    initialTodos: TodoType[]
+}
 
-    useEffect(() => {
-        const fetchTodos = async () => {
-            const todos = await readAllTodos()
-            setTodos(todos)
-        }
-
-        fetchTodos()
-    }, [])
+const TodosPage: FC<TodosPageProps> = ({isSubscribed, initialTodos}) => {
+    const [todos, setTodos] = useState(initialTodos)
 
     const handleAdd = async (todo: string) => {
         const newTodo = await createTodo({
@@ -54,7 +51,7 @@ const TodosPage: FC = () => {
 
             <h1>todos</h1>
 
-            {subscription ? (
+            {isSubscribed ? (
                 <>
                     <TodoForm onSubmit={handleAdd} />
 
@@ -79,7 +76,23 @@ const TodosPage: FC = () => {
     )
 }
 
-const getServerSideProps = withAuthRequired({redirectTo: "/signin"})
+const getProps: GetServerSideProps = async context => {
+    const {user} = await getUser(context)
+    const subscription = await readSubscriptionByUser(context, user.id)
+    const todos = await readAllTodos(context)
+
+    return {
+        props: {
+            isSubscribed: subscription?.status === "active",
+            initialTodos: todos,
+        },
+    }
+}
+
+const getServerSideProps = withAuthRequired({
+    redirectTo: "/signin",
+    getServerSideProps: getProps,
+})
 
 export default TodosPage
 export {getServerSideProps}

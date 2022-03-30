@@ -30,13 +30,7 @@ const Account: FC<AccountProps> = ({user, subscription}) => {
         <div className={AccountStyles.account}>
             <div className={AccountStyles.email}>
                 <p className={AccountStyles.title}>Email</p>
-                {user ? (
-                    <p>{user?.email}</p>
-                ) : (
-                    <p>
-                        Please <Link to="/signin">sign in</Link>.
-                    </p>
-                )}
+                <p>{user?.email}</p>
             </div>
 
             <div className={AccountStyles.subscription}>

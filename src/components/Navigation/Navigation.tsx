@@ -5,6 +5,7 @@ import {FC} from "react"
 import NavigationStyles from "./Navigation.module.css"
 
 const Navigation: FC = () => {
+    // TODO: fix unauthenticated flash
     const {user} = useUser()
 
     return (
