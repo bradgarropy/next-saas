@@ -14,6 +14,7 @@ const createTodo = async (todo: Partial<Todo>) => {
     return newTodo
 }
 
+// TODO: define interface for api routes and getServerSideProps
 const readAllTodos = async (context: GetServerSidePropsContext) => {
     const {data: todos} = await supabaseServerClient(context)
         .from<Todo>("todos")

@@ -14,6 +14,7 @@ const createSubscription = async (subscription: Partial<Subscription>) => {
     return newSubscription
 }
 
+// TODO: define interface for api routes and getServerSideProps
 const readSubscriptionByUser = async (
     context: GetServerSidePropsContext,
     userId: Subscription["userId"],
