@@ -19,15 +19,3 @@
 .link:hover {
     color: var(--gray);
 }
-
-.signout {
-    border: none;
-    background: none;
-    font-size: 1rem;
-    padding: 0rem;
-    font-family: inherit;
-}
-
-.signout:hover {
-    color: var(--gray);
-}

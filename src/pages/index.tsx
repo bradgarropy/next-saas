@@ -1,8 +1,8 @@
 import {post} from "@bradgarropy/http"
 import SEO from "@bradgarropy/next-seo"
+import {useUser} from "@supabase/supabase-auth-helpers/react"
 import Layout from "components/Layout"
 import Pricing from "components/Pricing"
-import {useUser} from "hooks"
 import {GetStaticProps} from "next"
 import {useRouter} from "next/router"
 import {FC} from "react"
@@ -16,8 +16,8 @@ type IndexPageProps = {
 }
 
 const IndexPage: FC<IndexPageProps> = ({products}) => {
+    const {user} = useUser()
     const router = useRouter()
-    const {user, token} = useUser()
 
     const onCheckout = async (product: Product) => {
         if (!user) {
@@ -30,9 +30,6 @@ const IndexPage: FC<IndexPageProps> = ({products}) => {
                 price: {
                     id: product.price.id,
                 },
-            },
-            headers: {
-                Authorization: `Bearer ${token}`,
             },
         })
 

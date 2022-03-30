@@ -1,25 +1,16 @@
 import Link from "@bradgarropy/next-link"
 import SEO from "@bradgarropy/next-seo"
+import {withAuthRequired} from "@supabase/supabase-auth-helpers/nextjs"
 import Layout from "components/Layout"
 import Todo from "components/Todo"
 import TodoForm from "components/TodoForm"
-import {useUser} from "hooks"
-import {useRouter} from "next/router"
 import {FC, useEffect, useState} from "react"
 import {Todo as TodoType} from "types/todo"
 import {createTodo, deleteTodo, readAllTodos, updateTodo} from "utils/todos"
 
 const TodosPage: FC = () => {
-    const router = useRouter()
-    const {user, subscription} = useUser()
     const [todos, setTodos] = useState([])
-
-    useEffect(() => {
-        if (!user) {
-            router.push("/signin")
-            return
-        }
-    }, [user, router])
+    const subscription = null
 
     useEffect(() => {
         const fetchTodos = async () => {
@@ -88,4 +79,7 @@ const TodosPage: FC = () => {
     )
 }
 
+const getServerSideProps = withAuthRequired({redirectTo: "/signin"})
+
 export default TodosPage
+export {getServerSideProps}
