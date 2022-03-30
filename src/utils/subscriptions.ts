@@ -2,7 +2,7 @@ import {
     supabaseClient,
     supabaseServerClient,
 } from "@supabase/supabase-auth-helpers/nextjs"
-import {GetServerSidePropsContext} from "next"
+import {GetServerSidePropsContext, NextApiRequest} from "next"
 import {Subscription} from "types/subscription"
 
 const createSubscription = async (subscription: Partial<Subscription>) => {
@@ -14,9 +14,12 @@ const createSubscription = async (subscription: Partial<Subscription>) => {
     return newSubscription
 }
 
-// TODO: define interface for api routes and getServerSideProps
 const readSubscriptionByUser = async (
-    context: GetServerSidePropsContext,
+    context:
+        | GetServerSidePropsContext
+        | {
+              req: NextApiRequest
+          },
     userId: Subscription["userId"],
 ) => {
     const {data: subscription} = await supabaseServerClient(context)

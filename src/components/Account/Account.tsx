@@ -14,15 +14,7 @@ type AccountProps = {
 
 const Account: FC<AccountProps> = ({user, subscription}) => {
     const handleClick = async () => {
-        const session = await post<Stripe.BillingPortal.Session>(
-            "/api/portal",
-            {
-                body: {
-                    customerId: subscription.customerId,
-                },
-            },
-        )
-
+        const session = await post<Stripe.BillingPortal.Session>("/api/portal")
         window.location.href = session.url
     }
 
