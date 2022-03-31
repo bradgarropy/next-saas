@@ -1,6 +1,6 @@
 # 👨🏼‍💻 next saas
 
-_A basic todo application built with [Next.js][next] and [Supabase][supabase]._
+_A SaaS application template with users, subscriptions, and a todo list. Built with [Next.js][next], [Supabase][supabase], and [Stripe][stripe]._
 
 [![vercel][vercel-badge]][vercel]
 [![github actions][github-actions-badge]][github-actions]
@@ -33,6 +33,7 @@ _A basic todo application built with [Next.js][next] and [Supabase][supabase]._
 
 [next]: https://nextjs.org
 [supabase]: https://supabase.com
+[stripe]: https://stripe.com
 [vercel]: https://vercel.com/bradgarropy/next-saas
 [vercel-badge]: https://img.shields.io/github/deployments/bradgarropy/next-saas/production?label=vercel&style=flat-square
 [github-actions]: https://github.com/bradgarropy/next-saas/actions
