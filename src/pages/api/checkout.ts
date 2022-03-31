@@ -2,6 +2,7 @@ import {getUser, withAuthRequired} from "@supabase/supabase-auth-helpers/nextjs"
 import type {NextApiHandler} from "next"
 import Stripe from "stripe"
 import {stripeServer} from "utils/stripeServer"
+import {createUrl} from "utils/url"
 
 const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
     req,
@@ -21,8 +22,8 @@ const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
     console.log(process.env.VERCEL_URL)
 
     const sessionCreateParams: Stripe.Checkout.SessionCreateParams = {
-        success_url: "http://localhost:3000/todos",
-        cancel_url: "http://localhost:3000",
+        success_url: createUrl("/todos"),
+        cancel_url: createUrl("/"),
         line_items: [
             {
                 price: price.id,
