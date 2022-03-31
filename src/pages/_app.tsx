@@ -30,12 +30,12 @@ const App = ({Component, pageProps}: AppProps): ReactElement => {
                 keywords={pkg.keywords}
                 icon="/favicon.ico"
                 facebook={{
-                    image: "https://next-saas.bradgarropy.vercel.app/facebook.png",
-                    url: "https://next-saas.bradgarropy.vercel.app",
+                    image: "https://next-saas-bradgarropy.vercel.app/facebook.png",
+                    url: "https://next-saas-bradgarropy.vercel.app",
                     type: "website",
                 }}
                 twitter={{
-                    image: "https://next-saas.bradgarropy.vercel.app/twitter.png",
+                    image: "https://next-saas-bradgarropy.vercel.app/twitter.png",
                     site: "@bradgarropy",
                     card: "summary",
                 }}

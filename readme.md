@@ -10,7 +10,7 @@ _A SaaS application template with users, subscriptions, and a todo list. Built w
 [![discord][discord-badge]][discord]
 
 <p align="center">
-    <a href="https://next-saas.bradgarropy.vercel.app">
+    <a href="https://next-saas-bradgarropy.vercel.app">
         <img alt="next saas" src="./public/github.png" width="300">
     </a>
 </p>
