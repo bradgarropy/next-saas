@@ -1,23 +1,18 @@
+import {useUser} from "@supabase/supabase-auth-helpers/react"
 import {render, screen} from "@testing-library/react"
 import Header from "components/Header"
-import {useUser} from "hooks"
-import {mockUserCtx} from "test-utils/mocks"
+import {mockUser} from "test-utils/mocks"
 
-jest.mock("utils/supabase", () => {
-    return {
-        supabase: {
-            auth: {
-                signout: jest.fn(),
-            },
-        },
-    }
-})
+jest.mock("@supabase/supabase-auth-helpers/react")
 
-jest.mock("hooks")
 const mockUseUser = jest.mocked(useUser)
 
 test("shows unauthenticated header", () => {
-    mockUseUser.mockReturnValue({...mockUserCtx, user: null})
+    mockUseUser.mockReturnValue({
+        isLoading: false,
+        user: null,
+        accessToken: null,
+    })
 
     render(<Header />)
 
@@ -27,7 +22,11 @@ test("shows unauthenticated header", () => {
 })
 
 test("shows authenticated header", () => {
-    mockUseUser.mockReturnValue(mockUserCtx)
+    mockUseUser.mockReturnValue({
+        isLoading: false,
+        user: mockUser,
+        accessToken: null,
+    })
 
     render(<Header />)
 
