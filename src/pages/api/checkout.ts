@@ -17,6 +17,9 @@ const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
 
     const customer = customers[0]
 
+    console.log(process.env.URL)
+    console.log(process.env.VERCEL_URL)
+
     const sessionCreateParams: Stripe.Checkout.SessionCreateParams = {
         success_url: "http://localhost:3000/todos",
         cancel_url: "http://localhost:3000",
