@@ -1,16 +1,14 @@
+import {getUser, withAuthRequired} from "@supabase/supabase-auth-helpers/nextjs"
 import type {NextApiHandler} from "next"
 import Stripe from "stripe"
 import {stripeServer} from "utils/stripeServer"
-import {supabase} from "utils/supabase"
 
 const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
     req,
     res,
 ) => {
     const {price} = req.body
-
-    const token = req.headers.authorization.split(" ")[1]
-    const {user} = await supabase.auth.api.getUser(token)
+    const {user} = await getUser({req, res})
 
     const {data: customers} = await stripeServer.customers.list({
         email: user.email,
@@ -49,4 +47,4 @@ const checkoutHandler: NextApiHandler<Stripe.Checkout.Session> = async (
     res.status(200).json(session)
 }
 
-export default checkoutHandler
+export default withAuthRequired(checkoutHandler)

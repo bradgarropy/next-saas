@@ -23,8 +23,7 @@ test("shows no user information", () => {
     render(<Account user={null} subscription={null} />)
 
     expect(screen.getByText("Email"))
-    expect(screen.getByText("Please", {exact: false}))
-    expect(screen.getByText("sign in")).toHaveAttribute("href", "/signin")
+    expect(screen.queryByText(mockUser.email)).not.toBeInTheDocument()
 })
 
 test("shows user information", () => {

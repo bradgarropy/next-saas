@@ -1,37 +1,19 @@
+import {useUser} from "@supabase/supabase-auth-helpers/react"
 import {render, screen} from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import Navigation from "components/Navigation"
-import {useUser} from "hooks"
-import {mockUserCtx} from "test-utils/mocks"
-import {supabase} from "utils/supabase"
+import {mockUser} from "test-utils/mocks"
 
-jest.mock("utils/supabase", () => {
-    return {
-        supabase: {
-            auth: {
-                signOut: jest.fn(),
-            },
-        },
-    }
-})
-
-jest.mock("next/router", () => {
-    return {
-        useRouter: () => {
-            return {
-                push: () => jest.fn(),
-            }
-        },
-    }
-})
-
-jest.mock("hooks/useUser")
+jest.mock("@supabase/supabase-auth-helpers/react")
 
 const mockUseUser = jest.mocked(useUser)
-const mockAuthSignOut = jest.mocked(supabase.auth.signOut)
 
 test("shows unauthenticated navigation", () => {
-    mockUseUser.mockReturnValue({...mockUserCtx, user: null})
+    mockUseUser.mockReturnValue({
+        isLoading: false,
+        user: null,
+        accessToken: null,
+    })
+
     render(<Navigation />)
 
     expect(screen.getByText("home"))
@@ -40,7 +22,11 @@ test("shows unauthenticated navigation", () => {
 })
 
 test("shows authenticated navigation", () => {
-    mockUseUser.mockReturnValue(mockUserCtx)
+    mockUseUser.mockReturnValue({
+        isLoading: false,
+        user: mockUser,
+        accessToken: "abc123",
+    })
 
     render(<Navigation />)
 
@@ -48,13 +34,4 @@ test("shows authenticated navigation", () => {
     expect(screen.getByText("todos"))
     expect(screen.getByText("account"))
     expect(screen.getByText("signout"))
-})
-
-test("signs out", () => {
-    mockUseUser.mockReturnValue(mockUserCtx)
-
-    render(<Navigation />)
-
-    userEvent.click(screen.getByText("signout"))
-    expect(mockAuthSignOut).toHaveBeenCalledTimes(1)
 })

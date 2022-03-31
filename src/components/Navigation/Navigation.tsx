@@ -1,20 +1,12 @@
 import Link from "@bradgarropy/next-link"
-import classNames from "classnames"
-import {useUser} from "hooks"
-import {useRouter} from "next/router"
+import {useUser} from "@supabase/supabase-auth-helpers/react"
 import {FC} from "react"
-import {supabase} from "utils/supabase"
 
 import NavigationStyles from "./Navigation.module.css"
 
 const Navigation: FC = () => {
+    // TODO: fix unauthenticated flash
     const {user} = useUser()
-    const router = useRouter()
-
-    const handleSignout = async () => {
-        await supabase.auth.signOut()
-        router.push("/")
-    }
 
     return (
         <nav className={NavigationStyles.navigation}>
@@ -36,15 +28,12 @@ const Navigation: FC = () => {
                         account
                     </Link>
 
-                    <button
-                        className={classNames(
-                            NavigationStyles.signout,
-                            NavigationStyles.link,
-                        )}
-                        onClick={handleSignout}
+                    <Link
+                        to="/api/auth/logout"
+                        className={NavigationStyles.link}
                     >
                         signout
-                    </button>
+                    </Link>
                 </div>
             ) : (
                 <div className={NavigationStyles.navSection}>

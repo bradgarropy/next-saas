@@ -1,8 +1,12 @@
+import {
+    supabaseClient,
+    supabaseServerClient,
+} from "@supabase/supabase-auth-helpers/nextjs"
+import {GetServerSidePropsContext} from "next"
 import {Todo} from "types/todo"
-import {supabase} from "utils/supabase"
 
 const createTodo = async (todo: Partial<Todo>) => {
-    const {data: newTodo} = await supabase
+    const {data: newTodo} = await supabaseClient
         .from<Todo>("todos")
         .insert(todo)
         .single()
@@ -10,8 +14,8 @@ const createTodo = async (todo: Partial<Todo>) => {
     return newTodo
 }
 
-const readAllTodos = async () => {
-    const {data: todos} = await supabase
+const readAllTodos = async (context: GetServerSidePropsContext) => {
+    const {data: todos} = await supabaseServerClient(context)
         .from<Todo>("todos")
         .select("*")
         .order("createdAt", {ascending: false})
@@ -20,7 +24,7 @@ const readAllTodos = async () => {
 }
 
 const updateTodo = async (id: Todo["id"], updates: Partial<Todo>) => {
-    const {data: updatedTodo} = await supabase
+    const {data: updatedTodo} = await supabaseClient
         .from("todos")
         .update(updates)
         .eq("id", id)
@@ -30,7 +34,7 @@ const updateTodo = async (id: Todo["id"], updates: Partial<Todo>) => {
 }
 
 const deleteTodo = async (id: Todo["id"]) => {
-    const {data: deletedTodo} = await supabase
+    const {data: deletedTodo} = await supabaseClient
         .from<Todo>("todos")
         .delete()
         .eq("id", id)

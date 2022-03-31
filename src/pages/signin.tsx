@@ -1,15 +1,15 @@
 import SEO from "@bradgarropy/next-seo"
+import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs"
 import AuthForm from "components/AuthForm"
 import Layout from "components/Layout"
 import {useRouter} from "next/router"
 import {FC} from "react"
-import {supabase} from "utils/supabase"
 
 const SigninPage: FC = () => {
     const router = useRouter()
 
     const handleSignin = async (email: string, password: string) => {
-        await supabase.auth.signIn({
+        await supabaseClient.auth.signIn({
             email,
             password,
         })

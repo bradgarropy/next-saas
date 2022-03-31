@@ -1,21 +1,17 @@
+import {useUser} from "@supabase/supabase-auth-helpers/react"
 import {render, screen} from "@testing-library/react"
 import Layout from "components/Layout"
-import {supabase} from "utils/supabase"
 
-jest.mock("utils/supabase", () => {
-    return {
-        supabase: {
-            auth: {
-                user: jest.fn(),
-            },
-        },
-    }
-})
+jest.mock("@supabase/supabase-auth-helpers/react")
 
-const mockAuthUser = jest.mocked(supabase.auth.user)
+const mockUseUser = jest.mocked(useUser)
 
 test("shows layout", () => {
-    mockAuthUser.mockReturnValue(null)
+    mockUseUser.mockReturnValue({
+        isLoading: false,
+        user: null,
+        accessToken: null,
+    })
 
     render(
         <Layout>

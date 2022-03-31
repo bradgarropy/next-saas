@@ -1,5 +1,4 @@
 import {User} from "@supabase/supabase-js"
-import {UserContextType} from "context"
 import {Product} from "types/product"
 import {Subscription} from "types/subscription"
 import {Todo} from "types/todo"
@@ -80,12 +79,6 @@ const mockPremiumSubscription: Subscription = {
     createdAt: "00:00:00",
 }
 
-const mockUserCtx: UserContextType = {
-    user: mockUser,
-    token: "abc123",
-    subscription: mockBasicSubscription,
-}
-
 export {
     mockBasicProduct,
     mockBasicSubscription,
@@ -97,5 +90,4 @@ export {
     mockTodo,
     mockTodos,
     mockUser,
-    mockUserCtx,
 }

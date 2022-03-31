@@ -1,21 +1,19 @@
 import SEO from "@bradgarropy/next-seo"
+import {getUser, withAuthRequired} from "@supabase/supabase-auth-helpers/nextjs"
+import {User} from "@supabase/supabase-js"
 import Account from "components/Account"
 import Layout from "components/Layout"
-import {useUser} from "hooks"
-import {useRouter} from "next/router"
-import {FC, useEffect} from "react"
+import {GetServerSideProps} from "next"
+import {FC} from "react"
+import {Subscription} from "types/subscription"
+import {readSubscriptionByUser} from "utils/subscriptions"
 
-const AccountPage: FC = () => {
-    const router = useRouter()
-    const {user, subscription} = useUser()
+type AccountPageProps = {
+    user: User
+    subscription: Subscription
+}
 
-    useEffect(() => {
-        if (!user) {
-            router.push("/signin")
-            return
-        }
-    }, [user, router])
-
+const AccountPage: FC<AccountPageProps> = ({user, subscription}) => {
     return (
         <Layout>
             <SEO title="account" />
@@ -26,4 +24,21 @@ const AccountPage: FC = () => {
     )
 }
 
+const getProps: GetServerSideProps = async context => {
+    const {user} = await getUser(context)
+    const subscription = await readSubscriptionByUser(context, user.id)
+
+    return {
+        props: {
+            subscription,
+        },
+    }
+}
+
+const getServerSideProps = withAuthRequired({
+    redirectTo: "/signin",
+    getServerSideProps: getProps,
+})
+
 export default AccountPage
+export {getServerSideProps}
