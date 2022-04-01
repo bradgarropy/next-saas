@@ -1,12 +1,14 @@
-body {
-    /* colors */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
     --white: #ffffff;
     --offWhite: #f1f1f1;
     --gray: #757575;
     --offBlack: #111111;
     --black: #000000;
 
-    /* aliases */
     --grey: var(--gray);
 
     margin: 0;
@@ -19,4 +21,4 @@ body {
 .container {
     margin: auto;
     max-width: 1000px;
-}
+} */
