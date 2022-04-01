@@ -1,6 +1,6 @@
 {
     "name": "next-saas",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "👨🏼‍💻 next saas",
     "keywords": [
         "typescript",
@@ -43,6 +43,7 @@
     },
     "dependencies": {
         "@bradgarropy/http": "^1.1.1",
+        "@bradgarropy/next-google-analytics": "^1.0.2",
         "@bradgarropy/next-link": "^1.0.2",
         "@bradgarropy/next-seo": "^1.1.0",
         "@heroicons/react": "^1.0.6",
