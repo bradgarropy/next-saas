@@ -1,7 +1,5 @@
 import {FC, FormEventHandler, useState} from "react"
 
-import TodoFormStyles from "./TodoForm.module.css"
-
 type TodoFormProps = {
     onSubmit: (todo: string) => Promise<void>
 }
@@ -16,16 +14,22 @@ const TodoForm: FC<TodoFormProps> = ({onSubmit}) => {
     }
 
     return (
-        <form className={TodoFormStyles.form} onSubmit={handleSubmit}>
+        <form
+            className="mb-8 grid grid-flow-col gap-x-4"
+            onSubmit={handleSubmit}
+        >
             <input
                 type="text"
                 value={todo}
                 aria-label="todo"
-                className={TodoFormStyles.input}
+                className="rounded-lg border-2 border-gray-900 py-2 px-4"
                 onChange={event => setTodo(event.target.value)}
             />
 
-            <button className={TodoFormStyles.submit} type="submit">
+            <button
+                className="rounded-lg  bg-gray-900 py-2 px-4 font-bold text-gray-50 transition-transform hover:scale-105"
+                type="submit"
+            >
                 add
             </button>
         </form>

@@ -18,7 +18,7 @@ const AccountPage: FC<AccountPageProps> = ({user, subscription}) => {
         <Layout>
             <SEO title="account" />
 
-            <h1>account</h1>
+            <h1 className="mb-6 text-4xl font-bold">account</h1>
             <Account user={user} subscription={subscription} />
         </Layout>
     )

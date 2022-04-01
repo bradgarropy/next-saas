@@ -21,7 +21,7 @@ const SignupPage: FC = () => {
         <Layout>
             <SEO title="signup" />
 
-            <h1>signup</h1>
+            <h1 className="mb-6 text-4xl font-bold">signup</h1>
 
             {user ? (
                 <p>{`Go check your email, ${user.email}.`}</p>

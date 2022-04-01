@@ -1,13 +1,11 @@
 import Header from "components/Header"
 import {FC} from "react"
 
-import styles from "./Layout.module.css"
-
 const Layout: FC = ({children}) => {
     return (
-        <div className={styles.layout}>
+        <div className="grid h-screen grid-rows-layout">
             <Header />
-            <div className="container">{children}</div>
+            <div className="m-auto max-w-5xl">{children}</div>
         </div>
     )
 }

@@ -21,7 +21,7 @@ const SigninPage: FC = () => {
         <Layout>
             <SEO title="signin" />
 
-            <h1>signin</h1>
+            <h1 className="mb-6 text-4xl font-bold">signin</h1>
             <AuthForm type="signin" onSubmit={handleSignin} />
         </Layout>
     )
