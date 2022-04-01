@@ -1,5 +1,6 @@
 import "../styles/styles.css"
 
+import GoogleAnalytics from "@bradgarropy/next-google-analytics"
 import SEO from "@bradgarropy/next-seo"
 import {supabaseClient} from "@supabase/supabase-auth-helpers/nextjs"
 import {UserProvider} from "@supabase/supabase-auth-helpers/react"
@@ -39,6 +40,12 @@ const App = ({Component, pageProps}: AppProps): ReactElement => {
                     site: "@bradgarropy",
                     card: "summary",
                 }}
+            />
+
+            <GoogleAnalytics
+                measurementId={
+                    process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_MEASUREMENT_ID
+                }
             />
 
             <UserProvider supabaseClient={supabaseClient}>
