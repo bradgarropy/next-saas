@@ -1,7 +1,5 @@
 import {FC, FormEventHandler, useState} from "react"
 
-import AuthFormStyles from "./AuthForm.module.css"
-
 type AuthFormProps = {
     type: "signin" | "signup"
     onSubmit: (email: string, password: string) => Promise<void>
@@ -17,8 +15,8 @@ const AuthForm: FC<AuthFormProps> = ({type, onSubmit}) => {
     }
 
     return (
-        <form className={AuthFormStyles.form} onSubmit={handleSubmit}>
-            <label className={AuthFormStyles.label} htmlFor="email">
+        <form className="grid grid-cols-form gap-4" onSubmit={handleSubmit}>
+            <label className="self-center justify-self-end" htmlFor="email">
                 email
             </label>
 
@@ -27,11 +25,11 @@ const AuthForm: FC<AuthFormProps> = ({type, onSubmit}) => {
                 type="email"
                 value={email}
                 autoComplete="email"
-                className={AuthFormStyles.input}
+                className="rounded-lg border-2 border-gray-900 py-2 px-4 text-base"
                 onChange={event => setEmail(event.target.value)}
             />
 
-            <label className={AuthFormStyles.label} htmlFor="password">
+            <label className="self-center justify-self-end" htmlFor="password">
                 password
             </label>
 
@@ -42,11 +40,14 @@ const AuthForm: FC<AuthFormProps> = ({type, onSubmit}) => {
                 autoComplete={
                     type === "signin" ? "current-password" : "new-password"
                 }
-                className={AuthFormStyles.input}
+                className="rounded-lg border-2 border-gray-900 py-2 px-4 text-base"
                 onChange={event => setPassword(event.target.value)}
             />
 
-            <button className={AuthFormStyles.submit} type="submit">
+            <button
+                className="col-start-2 rounded-lg border-2 border-gray-900 bg-gray-900 py-2 px-4 text-xl font-bold text-gray-50 transition-transform hover:scale-105"
+                type="submit"
+            >
                 {type}
             </button>
         </form>

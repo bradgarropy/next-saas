@@ -49,7 +49,7 @@ const TodosPage: FC<TodosPageProps> = ({isSubscribed, initialTodos}) => {
         <Layout>
             <SEO title="todos" />
 
-            <h1>todos</h1>
+            <h1 className="mb-6 text-4xl font-bold">todos</h1>
 
             {isSubscribed ? (
                 <>

@@ -1,7 +1,15 @@
 const config = {
-    content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
+    content: ["src/pages/**/*.tsx", "src/components/**/*.tsx"],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateRows: {
+                layout: "auto 1fr auto",
+            },
+            gridTemplateColumns: {
+                form: "auto 1fr",
+                todo: "auto 1fr auto",
+            },
+        },
     },
     plugins: [],
 }

@@ -1,12 +1,10 @@
 import Navigation from "components/Navigation"
 import {FC} from "react"
 
-import styles from "./Header.module.css"
-
 const Header: FC = () => {
     return (
-        <header className={styles.header}>
-            <div className="container">
+        <header className="px-8 py-5 shadow-lg">
+            <div className="m-auto max-w-5xl">
                 <Navigation />
             </div>
         </header>

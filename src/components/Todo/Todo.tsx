@@ -6,8 +6,6 @@ import {CheckCircleIcon as CompleteIcon} from "@heroicons/react/solid"
 import {FC} from "react"
 import {Todo as TodoType} from "types/todo"
 
-import TodoStyles from "./Todo.module.css"
-
 type TodoProps = {
     todo: TodoType
     onDelete: (id: TodoType["id"]) => Promise<void>
@@ -16,29 +14,29 @@ type TodoProps = {
 
 const Todo: FC<TodoProps> = ({todo, onDelete, onCompleted}) => {
     return (
-        <div className={TodoStyles.todo}>
+        <div className="grid grid-cols-todo items-center text-xl">
             <button
-                className={TodoStyles.complete}
+                className="grid border-none bg-none p-2"
                 type="button"
                 aria-label={todo.isCompleted ? "complete" : "incomplete"}
                 onClick={() => onCompleted(todo.id)}
             >
                 {todo.isCompleted ? (
-                    <CompleteIcon className={TodoStyles.icon} />
+                    <CompleteIcon className="w-6" />
                 ) : (
-                    <IncompleteIcon className={TodoStyles.icon} />
+                    <IncompleteIcon className="w-6" />
                 )}
             </button>
 
             <span>{todo.name}</span>
 
             <button
-                className={TodoStyles.delete}
+                className="grid border-none bg-none p-2"
                 type="button"
                 aria-label="delete"
                 onClick={() => onDelete(todo.id)}
             >
-                <TrashIcon className={TodoStyles.icon} />
+                <TrashIcon className="w-6" />
             </button>
         </div>
     )

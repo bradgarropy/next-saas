@@ -2,46 +2,56 @@ import Link from "@bradgarropy/next-link"
 import {useUser} from "@supabase/supabase-auth-helpers/react"
 import {FC} from "react"
 
-import NavigationStyles from "./Navigation.module.css"
-
 const Navigation: FC = () => {
     // TODO: fix unauthenticated flash
     const {user} = useUser()
 
     return (
-        <nav className={NavigationStyles.navigation}>
-            <div className={NavigationStyles.navSection}>
-                <Link to="/" className={NavigationStyles.link}>
+        <nav className="grid grid-flow-col justify-between">
+            <div className="grid grid-flow-col gap-x-12">
+                <Link to="/" className="text-gray-900 hover:text-gray-500">
                     home
                 </Link>
 
                 {user ? (
-                    <Link to="/todos" className={NavigationStyles.link}>
+                    <Link
+                        to="/todos"
+                        className="text-gray-900 hover:text-gray-500"
+                    >
                         todos
                     </Link>
                 ) : null}
             </div>
 
             {user ? (
-                <div className={NavigationStyles.navSection}>
-                    <Link to="/account" className={NavigationStyles.link}>
+                <div className="grid grid-flow-col gap-x-12">
+                    <Link
+                        to="/account"
+                        className="text-gray-900 hover:text-gray-500"
+                    >
                         account
                     </Link>
 
                     <Link
                         to="/api/auth/logout"
-                        className={NavigationStyles.link}
+                        className="text-gray-900 hover:text-gray-500"
                     >
                         signout
                     </Link>
                 </div>
             ) : (
-                <div className={NavigationStyles.navSection}>
-                    <Link to="/signup" className={NavigationStyles.link}>
+                <div className="grid grid-flow-col gap-x-12">
+                    <Link
+                        to="/signup"
+                        className="text-gray-900 hover:text-gray-500"
+                    >
                         signup
                     </Link>
 
-                    <Link to="/signin" className={NavigationStyles.link}>
+                    <Link
+                        to="/signin"
+                        className="text-gray-900 hover:text-gray-500"
+                    >
                         signin
                     </Link>
                 </div>

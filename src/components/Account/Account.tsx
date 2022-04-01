@@ -5,8 +5,6 @@ import {FC} from "react"
 import Stripe from "stripe"
 import {Subscription} from "types/subscription"
 
-import AccountStyles from "./Account.module.css"
-
 type AccountProps = {
     user: User
     subscription: Subscription
@@ -19,14 +17,14 @@ const Account: FC<AccountProps> = ({user, subscription}) => {
     }
 
     return (
-        <div className={AccountStyles.account}>
-            <div className={AccountStyles.email}>
-                <p className={AccountStyles.title}>Email</p>
+        <div className="grid gap-12">
+            <div className="flex flex-col gap-4">
+                <p className="text-2xl font-bold">Email</p>
                 <p>{user?.email}</p>
             </div>
 
-            <div className={AccountStyles.subscription}>
-                <p className={AccountStyles.title}>Subscription</p>
+            <div className="flex flex-col gap-4">
+                <p className="text-2xl font-bold">Subscription</p>
                 {subscription ? (
                     <>
                         <p>{subscription.name}</p>
@@ -36,7 +34,7 @@ const Account: FC<AccountProps> = ({user, subscription}) => {
                         }`}</p>
 
                         <button
-                            className={AccountStyles.change}
+                            className="mt-12 rounded-lg border-2 border-gray-900 bg-gray-50 py-2 px-4 text-gray-900 transition-transform hover:scale-105"
                             type="button"
                             onClick={handleClick}
                         >

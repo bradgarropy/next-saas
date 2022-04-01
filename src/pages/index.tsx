@@ -42,7 +42,7 @@ const IndexPage: FC<IndexPageProps> = ({products}) => {
         <Layout>
             <SEO title="pricing" />
 
-            <h1>pricing</h1>
+            <h1 className="mb-6 text-4xl font-bold">pricing</h1>
             <Pricing products={products} onCheckout={onCheckout} />
         </Layout>
     )
